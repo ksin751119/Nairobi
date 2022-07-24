@@ -1,0 +1,69 @@
+{
+  "name": "Nairobi",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Web3 auto-executed scripts tool connects wallet without exposing key",
+  "author": "Albert Lin",
+  "engines": {
+    "node": "^16.13.1",
+    "npm": "8.1.2"
+  },
+  "dependencies": {
+    "@gnosis.pm/safe-core-sdk": "^2.2.1",
+    "@gnosis.pm/safe-core-sdk-types": "^1.2.1",
+    "@gnosis.pm/safe-ethers-lib": "^1.2.1",
+    "@gnosis.pm/safe-service-client": "^1.2.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/chai": "^4.3.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^18.0.3",
+    "@types/react": "^17.0.20",
+    "@types/react-dom": "^17.0.9",
+    "@types/styled-components": "^5.1.18",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "assert": "^2.0.0",
+    "browserslist": "^4.21.2",
+    "buffer": "^6.0.3",
+    "chai": "^4.3.6",
+    "ethers": "^5.5.2",
+    "process": "^0.11.10",
+    "react": "^17.0.2",
+    "react-app-rewired": "^2.2.1",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.0",
+    "react-select": "^5.4.0",
+    "stream-browserify": "^3.0.0",
+    "styled-components": "^5.3.3",
+    "typescript": "^4.4.2"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.18"
+  }
+}
