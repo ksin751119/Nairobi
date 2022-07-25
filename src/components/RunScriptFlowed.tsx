@@ -1,5 +1,6 @@
 import { useWeb3React } from '@web3-react/core';
 import { Contract, ethers, Signer } from 'ethers';
+import {FlowManager} from 'flowed';
 import {
   ChangeEvent,
   MouseEvent,
@@ -12,7 +13,6 @@ import Select from 'react-select';
 import styled from 'styled-components';
 import { Provider } from '../utils/provider';
 import {SCRIPTS_MAPS} from '../scripts/default'
-
 
 
 
@@ -33,7 +33,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-export function RunScript(): ReactElement {
+export function RunScriptFlowed(): ReactElement {
   const context = useWeb3React<Provider>();
   const { library } = context;
 
