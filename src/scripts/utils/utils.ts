@@ -108,6 +108,21 @@ export async function stepRun(key: any, store: any, signer: Signer, steps: any) 
       store.setItem(key, JSON.stringify(cache));
     }
   }
+
+  await downloadFile(key, cache);
+}
+
+export async function downloadFile(key: any, data: any) {
+  const fileName = key.replace(' ', '_');
+  const json = JSON.stringify(data, replacer, 4);
+  const blob = new Blob([json], { type: 'application/json' });
+  const href = await URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = href;
+  link.download = fileName + '.json';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 function replacer(key: any, value: any) {
