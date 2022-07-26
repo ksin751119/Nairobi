@@ -68,7 +68,7 @@ export function RunScript(): ReactElement {
       window.alert("not connect wallet yet");
       return;
     }
-    await (await (SCRIPTS_MAPS.get(scriptInput)))?.default(signer);
+    await (await (SCRIPTS_MAPS.get(scriptInput)))?.default(scriptInput, signer);
   }
 
   function handleChange (option: any) {

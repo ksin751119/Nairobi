@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { ActivateDeactivate } from './components/ActivateDeactivate';
 import { ActivateDeactivate2 } from './components/ActivateDeactivate2';
 import { RunScript } from './components/RunScript';
-import { RunScriptFlowed } from './components/RunScriptFlowed';
 import { SectionDivider } from './components/SectionDivider';
 import { WalletStatus } from './components/WalletStatus';
 import { createTheme, WuiProvider } from '@welcome-ui/core'
@@ -25,7 +24,6 @@ export function App(): ReactElement {
       <WalletStatus />
       <SectionDivider />
       <RunScript />
-      <RunScriptFlowed />
     </StyledAppDiv>
     </WuiProvider>
   );

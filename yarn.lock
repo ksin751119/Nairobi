@@ -9788,6 +9788,11 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
+typescript-web-storage@^1.0.0-alpha.1:
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/typescript-web-storage/-/typescript-web-storage-1.0.0-alpha.1.tgz#53a2f91d2c70b7e9e1671c94a24fc2c2184054f6"
+  integrity sha512-Ma+r0/h69aSvUMzncWHrGBZVCcLllGbxzyMOOBoFRSM5/PFW9Fce0pzKQOg9NqrpeFUgJvxXOs7owknGuECJjQ==
+
 typescript@^4.4.2:
   version "4.7.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"

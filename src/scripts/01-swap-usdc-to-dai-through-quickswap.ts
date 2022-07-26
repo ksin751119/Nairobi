@@ -5,7 +5,7 @@ import {USDC_TOKEN, DAI_TOKEN, WMATIC_TOKEN, QUICKSWAP_ROUTER } from './utils/co
 import IERC20ABI from '../abi/IERC20.abi.json';
 import QuickswapRouterABI from '../abi/QuickswapRouter.abi.json';
 
-export default async function scriptRun(signer: Signer) {
+export default async function scriptRun(key:string, signer: Signer) {
   window.alert('01-swap-usdc-to-dai-through-quickswap');
 
   // Setup external services
