@@ -1,4 +1,5 @@
 import { BigNumber, Signer, ethers } from 'ethers';
+import { isHexString } from '@ethersproject/bytes';
 
 export function ether(num: any) {
   return ethers.utils.parseUnits(num, 'ether');
@@ -66,4 +67,70 @@ export function decimal6To18(amount: any) {
 
 export function decimal18To6(amount: any) {
   return amount.mul(mwei('1')).div(ether('1'));
+}
+
+export function resetCache(key: any, store: any) {
+  if (
+    window.confirm(
+      'Prepare to execute "' + key + '"  script. \nWould you want to reset cache before execute the script'
+    )
+  ) {
+    store.removeItem(key);
+  }
+}
+
+export async function stepRun(key: any, store: any, signer: Signer, steps: any) {
+  // Setup cache
+  var cache: any = JSON.parse(store.getItem(key) || '{}', parser);
+  if (Object.keys(cache).length === 0) {
+    cache = {
+      stepResult: {},
+      returns: {},
+    };
+  }
+
+  // Execute steps
+  for (var i = 0; i < steps.length; i++) {
+    const stepName = steps[i].name;
+    if (stepName in cache.stepResult) {
+      const stepResult = JSON.stringify(cache.stepResult[stepName], replacer, 4);
+      const message = stepName + ' has been executed. Do you wan to skip this step?\n' + stepResult;
+      if (window.confirm(message)) {
+        continue;
+      }
+    }
+    var returnObj: any = await steps[i](signer, cache);
+    if (returnObj !== undefined) {
+      for (let key in returnObj) {
+        cache.returns[key] = returnObj[key];
+      }
+      cache.stepResult[stepName] = returnObj;
+      store.setItem(key, JSON.stringify(cache));
+    }
+  }
+}
+
+function replacer(key: any, value: any) {
+  if (isBigNumber(value)) {
+    return BigNumber.from(value).toString();
+  }
+  return value;
+}
+
+function parser(key: any, value: any) {
+  if (isBigNumber(value)) {
+    return BigNumber.from(value);
+  }
+  return value;
+}
+
+function isBigNumber(value: any) {
+  if (value.type === 'BigNumber') {
+    if (typeof value.hex === 'string') {
+      if (isHexString(value.hex) || (value.hex[0] === '-' && isHexString(value.hex.substring(1)))) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
