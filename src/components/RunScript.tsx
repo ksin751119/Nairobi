@@ -5,13 +5,16 @@ import {
   MouseEvent,
   ReactElement,
   useEffect,
-  useState
+  useState,
+  useReducer
 } from 'react';
 import Select from 'react-select';
 
 import styled from 'styled-components';
 import { Provider } from '../utils/provider';
 import {SCRIPTS_MAPS} from '../scripts/default'
+import {textareaClear} from '../scripts/utils/utils'
+import { Textarea } from '@welcome-ui/textarea'
 
 
 
@@ -33,12 +36,16 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
+
 export function RunScript(): ReactElement {
   const context = useWeb3React<Provider>();
   const { library } = context;
 
   const [signer, setSigner] = useState<Signer>();
   const [scriptInput, setScriptInput] = useState<string>('');
+  const [scriptText, setScriptText] = useState<string>('');
+
+  // const forceUpdate = useReducer(() => ({}), {})[1] as () => void
 
 
   useEffect((): void => {
@@ -48,6 +55,7 @@ export function RunScript(): ReactElement {
     }
 
     setSigner(library.getSigner());
+
   }, [library]);
 
   function listOptions() {
@@ -68,12 +76,17 @@ export function RunScript(): ReactElement {
       window.alert("not connect wallet yet");
       return;
     }
+
+    // clear textarea log
+    textareaClear();
     await (await (SCRIPTS_MAPS.get(scriptInput)))?.default(scriptInput, signer);
+
   }
 
-  function handleChange (option: any) {
-    console.log(option.value);
+
+  async function handleChange (option: any) {
     setScriptInput(option.value);
+    setScriptText(await (await (SCRIPTS_MAPS.get(option.value)))?.default.toString() || '');
   }
 
   return (
@@ -97,6 +110,18 @@ export function RunScript(): ReactElement {
           Run Script
       </StyledButton>
       </StyledGreetingDiv>
+      <div>
+        <div>
+        <Textarea name="textarea2" readOnly value={scriptText} />
+        </div>
+        <div>
+        <Textarea id="textarea_log" readOnly></Textarea>
+        </div>
+
+
+
+      </div>
+
 
     </>
   );

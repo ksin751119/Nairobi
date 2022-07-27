@@ -26,6 +26,7 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@welcome-ui/button": "^4.2.0",
     "@welcome-ui/core": "^4.2.0",
+    "@welcome-ui/textarea": "^4.2.0",
     "@welcome-ui/themes": "^4.1.2",
     "@xstyled/styled-components": "^3.6.0",
     "assert": "^2.0.0",

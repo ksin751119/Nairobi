@@ -2885,6 +2885,14 @@
   resolved "https://registry.yarnpkg.com/@welcome-ui/system/-/system-4.2.0.tgz#2077b3b4b598e54b248b909e407de9fde83b87f7"
   integrity sha512-C0IRAvsl9DGNnQWcZfftDn4NUBgn4aEOTbIyJo88R61PYtnkBhBTGHLino+6e1ICS68Nm01o5FgmUJAtoJQNfg==
 
+"@welcome-ui/textarea@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@welcome-ui/textarea/-/textarea-4.2.0.tgz#9a59673eeaac7a97d8118c971e49c3adcf39e18d"
+  integrity sha512-XkfwXUcrbMTO+iYjJUXPq7+Zqj0nAxEMDa8u2A9SUs1M03Odx8qBb6x05Bwd6gOh4T+gbTcT4uepPesYicB84Q==
+  dependencies:
+    "@welcome-ui/system" "^4.2.0"
+    "@welcome-ui/utils" "^4.2.0"
+
 "@welcome-ui/themes@^4.1.2":
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@welcome-ui/themes/-/themes-4.1.2.tgz#e8c8dbedafc75c8ad9028fb2aee6ec0774d84b04"

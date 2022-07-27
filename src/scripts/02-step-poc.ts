@@ -4,7 +4,7 @@ import { LocalStorage } from 'typescript-web-storage';
 import IERC20ABI from '../abi/IERC20.abi.json';
 import QuickswapRouterABI from '../abi/QuickswapRouter.abi.json';
 import { USDC_TOKEN, DAI_TOKEN, WMATIC_TOKEN, QUICKSWAP_ROUTER } from './utils/constants';
-import { resetCache, stepRun } from './utils/utils';
+import { resetCache, stepRun, textareaLog } from './utils/utils';
 
 const store = new LocalStorage();
 var usdc: any;
@@ -13,15 +13,15 @@ var router: any;
 
 async function stepApproveUSDCToQuickswapRouter(signer: Signer, cache: any) {
   // Get token balance
-  console.log('Approve usdc to quickswap router');
+  textareaLog('Approve usdc to quickswap router');
   const amount = ethers.utils.parseUnits('1', 6);
   await (await usdc.connect(signer).approve(router.address, amount)).wait();
-  console.log('allowance', (await usdc.allowance(await signer.getAddress(), router.address)).toString());
+  textareaLog('allowance', (await usdc.allowance(await signer.getAddress(), router.address)).toString());
   return { amount: amount };
 }
 
 async function stepSwapUSDCToDAIByQuickswap(signer: Signer, cache: any) {
-  console.log('Swap usdc to dai');
+  textareaLog('Swap usdc to dai');
   const signerAddress = await signer.getAddress();
   const signerDAIBalanceBefore = await dai.balanceOf(signerAddress);
   const signerUSDCBalanceBefore = await usdc.balanceOf(signerAddress);
@@ -38,8 +38,8 @@ async function stepSwapUSDCToDAIByQuickswap(signer: Signer, cache: any) {
   // Verify result
   const signerDAIBalanceAfter = await dai.balanceOf(signerAddress);
   const signerUSDCBalanceAfter = await usdc.balanceOf(signerAddress);
-  console.log('Dai balance:', signerDAIBalanceAfter.toString());
-  console.log('USDC balance:', signerUSDCBalanceAfter.toString());
+  textareaLog('Dai balance:', signerDAIBalanceAfter.toString());
+  textareaLog('USDC balance:', signerUSDCBalanceAfter.toString());
   expect(signerUSDCBalanceBefore.sub(signerUSDCBalanceAfter).eq(amount)).to.be.eq(true);
   expect(signerDAIBalanceAfter.gt(signerDAIBalanceBefore)).to.be.eq(true);
 

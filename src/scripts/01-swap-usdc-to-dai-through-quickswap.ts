@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 import { ethers, Signer, constants } from 'ethers';
 
-import { USDC_TOKEN, DAI_TOKEN, WMATIC_TOKEN, QUICKSWAP_ROUTER } from './utils/constants';
 import IERC20ABI from '../abi/IERC20.abi.json';
 import QuickswapRouterABI from '../abi/QuickswapRouter.abi.json';
+import { USDC_TOKEN, DAI_TOKEN, WMATIC_TOKEN, QUICKSWAP_ROUTER } from './utils/constants';
+import { textareaLog } from './utils/utils';
 
 export default async function scriptRun(key: string, signer: Signer) {
   window.alert('01-swap-usdc-to-dai-through-quickswap');
@@ -19,12 +20,12 @@ export default async function scriptRun(key: string, signer: Signer) {
   const signerUSDCBalanceBefore = await usdc.balanceOf(signerAddress);
 
   // approve usdc to quickswap router
-  console.log('Approve usdc to quickswap router');
+  textareaLog('Approve usdc to quickswap router');
   const amount = ethers.utils.parseUnits('1', 'ether');
   await (await usdc.connect(signer).approve(QUICKSWAP_ROUTER, amount)).wait();
 
   // swap 1 ether usdc to dai through quickswap
-  console.log('swap usdc to dai');
+  textareaLog('swap usdc to dai');
   const path = [usdc.address, WMATIC_TOKEN, DAI_TOKEN];
   await (
     await router
@@ -37,8 +38,8 @@ export default async function scriptRun(key: string, signer: Signer) {
   const signerUSDCBalanceAfter = await usdc.balanceOf(signerAddress);
   expect(signerUSDCBalanceBefore.sub(signerUSDCBalanceAfter).eq(amount)).to.be.eq(true);
   expect(signerDAIBalanceAfter.gt(signerDAIBalanceBefore)).to.be.eq(true);
-  console.log('Dai balance:', signerDAIBalanceAfter.toString());
-  console.log('USDC balance:', signerUSDCBalanceAfter.toString());
+  textareaLog('Dai balance:', signerDAIBalanceAfter.toString());
+  textareaLog('USDC balance:', signerUSDCBalanceAfter.toString());
 
   window.alert('execution has been done.');
 }

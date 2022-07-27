@@ -125,6 +125,17 @@ export async function downloadFile(key: any, data: any) {
   document.body.removeChild(link);
 }
 
+export async function textareaLog(...args: any[]) {
+  var textarea = document.getElementById('textarea_log') as HTMLInputElement;
+  if (!textarea) return;
+  args.forEach((arg) => (textarea.value += `${JSON.stringify(arg)}\n`));
+}
+
+export async function textareaClear(...args: any[]) {
+  var textarea = document.getElementById('textarea_log') as HTMLInputElement;
+  textarea.value = '';
+}
+
 function replacer(key: any, value: any) {
   if (isBigNumber(value)) {
     return BigNumber.from(value).toString();
