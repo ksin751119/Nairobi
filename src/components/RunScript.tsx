@@ -15,15 +15,26 @@ import { Provider } from '../utils/provider';
 import {SCRIPTS_MAPS} from '../scripts/default'
 import {textareaClear} from '../scripts/utils/utils'
 import { Textarea } from '@welcome-ui/textarea'
-
+import { Table } from '@welcome-ui/table'
+import { Button } from '@welcome-ui/button'
+import { SettingsIcon } from '@welcome-ui/icons'
 
 
 
 const StyledGreetingDiv = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  // grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 300px 2.7fr 1fr;
   grid-gap: 10px;
+  place-self: center;
+  align-items: center;
+`;
+
+const StyledTableDiv = styled.div`
+  // display: grid;
+  // grid-template-rows: 1fr 1fr 1fr;
+  // grid-template-columns: 300px 2.7fr 1fr;
+  grid-gap: 100px;
   place-self: center;
   align-items: center;
 `;
@@ -44,6 +55,7 @@ export function RunScript(): ReactElement {
   const [signer, setSigner] = useState<Signer>();
   const [scriptInput, setScriptInput] = useState<string>('');
   const [scriptText, setScriptText] = useState<string>('');
+  const [scriptSteps, setScriptSteps] = useState<any[]>([]);
 
   // const forceUpdate = useReducer(() => ({}), {})[1] as () => void
 
@@ -87,12 +99,18 @@ export function RunScript(): ReactElement {
   async function handleChange (option: any) {
     setScriptInput(option.value);
     setScriptText(await (await (SCRIPTS_MAPS.get(option.value)))?.default.toString() || '');
+    const script:any = await (SCRIPTS_MAPS.get(option.value))
+
+    if (script.ScriptSteps !== undefined){
+      setScriptSteps(script.ScriptSteps)
+    } else {
+      setScriptSteps([])
+    }
   }
 
   return (
 
     <>
-
 
       <StyledGreetingDiv>
       <Select
@@ -110,6 +128,36 @@ export function RunScript(): ReactElement {
           Run Script
       </StyledButton>
       </StyledGreetingDiv>
+      <StyledTableDiv>
+      <Table>
+        <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Step</Table.Th>
+          <Table.Th>Cache</Table.Th>
+          <Table.Th textAlign="center" w={80}>
+            State
+          </Table.Th>
+        </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+        {scriptSteps.map(step => (
+          // console.log(step)
+          <Table.Tr key={step.name}>
+            <Table.Td>{step.name}</Table.Td>
+            <Table.Td >
+              <textarea id = {step.name+"_cache"} readOnly cols={50}></textarea>
+            </Table.Td>
+            <Table.Td textAlign="center">
+              <Button id = {step.name+"_button"} shape="circle" size="sm" variant="primary-info">
+                <SettingsIcon size="sm" />
+            </Button>
+            </Table.Td>
+          </Table.Tr>
+        ))}
+        </Table.Tbody>
+      </Table>
+      </StyledTableDiv>
+
       <div>
         <div>
         <Textarea name="textarea2" readOnly value={scriptText} />
@@ -117,9 +165,6 @@ export function RunScript(): ReactElement {
         <div>
         <Textarea id="textarea_log" readOnly></Textarea>
         </div>
-
-
-
       </div>
 
 

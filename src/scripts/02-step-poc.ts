@@ -14,14 +14,18 @@ var router: any;
 async function stepApproveUSDCToQuickswapRouter(signer: Signer, cache: any) {
   // Get token balance
   textareaLog('Approve usdc to quickswap router');
+  // return {};
+
   const amount = ethers.utils.parseUnits('1', 6);
-  await (await usdc.connect(signer).approve(router.address, amount)).wait();
+  // await (await usdc.connect(signer).approve(router.address, amount)).wait();
   textareaLog('allowance', (await usdc.allowance(await signer.getAddress(), router.address)).toString());
   return { amount: amount };
 }
 
 async function stepSwapUSDCToDAIByQuickswap(signer: Signer, cache: any) {
   textareaLog('Swap usdc to dai');
+  // return {};
+
   const signerAddress = await signer.getAddress();
   const signerDAIBalanceBefore = await dai.balanceOf(signerAddress);
   const signerUSDCBalanceBefore = await usdc.balanceOf(signerAddress);
@@ -29,11 +33,11 @@ async function stepSwapUSDCToDAIByQuickswap(signer: Signer, cache: any) {
   // swap 1 ether usdc to dai through quickswap
   const amount = cache.returns.amount;
   const path = [usdc.address, WMATIC_TOKEN, DAI_TOKEN];
-  await (
-    await router
-      .connect(signer)
-      .swapExactTokensForTokens(amount, 0, path, await signer.getAddress(), constants.MaxUint256)
-  ).wait();
+  // await (
+  //   await router
+  //     .connect(signer)
+  //     .swapExactTokensForTokens(amount, 0, path, await signer.getAddress(), constants.MaxUint256)
+  // ).wait();
 
   // Verify result
   const signerDAIBalanceAfter = await dai.balanceOf(signerAddress);
@@ -41,7 +45,7 @@ async function stepSwapUSDCToDAIByQuickswap(signer: Signer, cache: any) {
   textareaLog('Dai balance:', signerDAIBalanceAfter.toString());
   textareaLog('USDC balance:', signerUSDCBalanceAfter.toString());
   expect(signerUSDCBalanceBefore.sub(signerUSDCBalanceAfter).eq(amount)).to.be.eq(true);
-  expect(signerDAIBalanceAfter.gt(signerDAIBalanceBefore)).to.be.eq(true);
+  // expect(signerDAIBalanceAfter.gt(signerDAIBalanceBefore)).to.be.eq(true);
 
   return {
     signerDAIBalanceAfter: signerDAIBalanceAfter.toString(),
@@ -49,16 +53,14 @@ async function stepSwapUSDCToDAIByQuickswap(signer: Signer, cache: any) {
   };
 }
 
-export default async function scriptRun(key: string, signer: Signer) {
-  // Reset cache
-  resetCache(key, store);
+export const ScriptSteps = [stepApproveUSDCToQuickswapRouter, stepSwapUSDCToDAIByQuickswap];
 
+export default async function scriptRun(key: string, signer: Signer) {
   // Setup global variable
   usdc = new ethers.Contract(USDC_TOKEN, IERC20ABI, signer);
   dai = new ethers.Contract(DAI_TOKEN, IERC20ABI, signer);
   router = new ethers.Contract(QUICKSWAP_ROUTER, QuickswapRouterABI, signer);
 
   // Run steps
-  const steps = [stepApproveUSDCToQuickswapRouter, stepSwapUSDCToDAIByQuickswap];
-  await stepRun(key, store, signer, steps);
+  await stepRun(key, store, signer, ScriptSteps);
 }

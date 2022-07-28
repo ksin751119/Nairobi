@@ -1,5 +1,6 @@
 import { BigNumber, Signer, ethers } from 'ethers';
 import { isHexString } from '@ethersproject/bytes';
+import { Button } from '@welcome-ui/button';
 
 export function ether(num: any) {
   return ethers.utils.parseUnits(num, 'ether');
@@ -69,17 +70,23 @@ export function decimal18To6(amount: any) {
   return amount.mul(mwei('1')).div(ether('1'));
 }
 
-export function resetCache(key: any, store: any) {
+export function resetCache(key: any, store: any, steps: any) {
   if (
     window.confirm(
       'Prepare to execute "' + key + '"  script. \nWould you want to reset cache before execute the script'
     )
   ) {
     store.removeItem(key);
+    for (var i = 0; i < steps.length; i++) {
+      var button = document.getElementById(steps[i].name + '_button') as HTMLButtonElement;
+      button.style.background = '#4B9BF1';
+    }
   }
 }
 
 export async function stepRun(key: any, store: any, signer: Signer, steps: any) {
+  resetCache(key, store, steps);
+
   // Setup cache
   var cache: any = JSON.parse(store.getItem(key) || '{}', parser);
   if (Object.keys(cache).length === 0) {
@@ -99,17 +106,32 @@ export async function stepRun(key: any, store: any, signer: Signer, steps: any) 
         continue;
       }
     }
-    var returnObj: any = await steps[i](signer, cache);
+    try {
+      var returnObj: any = await steps[i](signer, cache);
+    } catch (e) {
+      var button = document.getElementById(steps[i].name + '_button') as HTMLButtonElement;
+      button.style.background = '#CE5947';
+      window.alert(e);
+      throw e;
+    }
     if (returnObj !== undefined) {
       for (let key in returnObj) {
         cache.returns[key] = returnObj[key];
       }
       cache.stepResult[stepName] = returnObj;
       store.setItem(key, JSON.stringify(cache));
+
+      var td = document.getElementById(steps[i].name + '_cache') as any;
+      // td.innerHTML = JSON.stringify(returnObj, replacer, 4);
+      td.value = JSON.stringify(returnObj, replacer, 4);
+      console.log(JSON.stringify(returnObj, replacer, 4));
     }
+
+    var button = document.getElementById(steps[i].name + '_button') as HTMLButtonElement;
+    button.style.background = '#52B45A';
   }
 
-  await downloadFile(key, cache);
+  // await downloadFile(key, cache);
 }
 
 export async function downloadFile(key: any, data: any) {
