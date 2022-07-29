@@ -18,8 +18,9 @@ export function Header():ReactElement {
 
 				<div className="header-logo">
 
+
 					<a href="https://github.com/ksin751119/Nairobi" style={{color:'black' }} target="_blank" rel="noreferrer" >Nairobi</a>
-					{/* <span>/&gt;</span> */}
+
 
 				</div>
 				<div>

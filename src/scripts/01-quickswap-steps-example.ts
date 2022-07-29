@@ -5,7 +5,6 @@ import IERC20ABI from '../abi/IERC20.abi.json';
 import QuickswapRouterABI from '../abi/QuickswapRouter.abi.json';
 import { USDC_TOKEN, DAI_TOKEN, WMATIC_TOKEN, QUICKSWAP_ROUTER } from './utils/constants';
 import { stepRun, textareaLog, sendTx } from './utils/utils';
-import { toast } from 'react-toastify';
 
 const store = new LocalStorage();
 var usdc: any;
@@ -17,13 +16,6 @@ async function stepApproveUSDCToQuickswapRouter(signer: Signer, cache: any) {
   textareaLog('Approve usdc to quickswap router');
 
   const amount = ethers.utils.parseUnits('0.1', 6);
-  // const tx = await (await usdc.connect(signer).approve(router.address, amount)).wait();
-  // const tx = await usdc.connect(signer).approve(router.address, amount);
-  // await toast.promise(tx.wait(), {
-  //   pending: 'tx is pending',
-  //   success: 'tx mined 👌',
-  //   error: 'tx fail 🤯',
-  // });
 
   await sendTx(await usdc.connect(signer).approve(router.address, amount));
 
@@ -46,12 +38,6 @@ async function stepSwapUSDCToDAIByQuickswap(signer: Signer, cache: any) {
       .connect(signer)
       .swapExactTokensForTokens(amount, 0, path, await signer.getAddress(), constants.MaxUint256)
   );
-
-  // await (
-  //   await router
-  //     .connect(signer)
-  //     .swapExactTokensForTokens(amount, 0, path, await signer.getAddress(), constants.MaxUint256)
-  // ).wait();
 
   // Verify result
   const signerDAIBalanceAfter = await dai.balanceOf(signerAddress);

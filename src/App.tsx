@@ -1,8 +1,6 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-// import { Top } from './components/topButton/Top';
 import { Hello } from './components/Hello/Hello';
-import { Social } from './components/Social/Social';
 import { Header } from './components/Header/Header';
 import { RunScript } from './components/RunScript';
 import { createTheme, WuiProvider } from '@welcome-ui/core'
@@ -19,7 +17,6 @@ const StyledAppDiv = styled.div`
 export function App(): ReactElement {
   return (
     <WuiProvider theme={theme}>
-      <Social/>
     <StyledAppDiv>
     <Header/>
       <div></div>
