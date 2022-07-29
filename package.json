@@ -32,6 +32,7 @@
     "@welcome-ui/box": "^4.2.0",
     "@welcome-ui/button": "^4.2.0",
     "@welcome-ui/core": "^4.2.0",
+    "@welcome-ui/field": "^4.2.0",
     "@welcome-ui/grid": "^4.2.0",
     "@welcome-ui/icons": "^4.3.3",
     "@welcome-ui/icons.avatar": "^4.2.0",

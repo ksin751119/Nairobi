@@ -19,6 +19,7 @@ import { Table } from '@welcome-ui/table'
 import { Button } from '@welcome-ui/button'
 import { SettingsIcon } from '@welcome-ui/icons'
 import { SectionDivider } from './SectionDivider';
+import { Field } from '@welcome-ui/field'
 
 
 
@@ -35,6 +36,16 @@ const StyledTableDiv = styled.div`
   // display: grid;
   // grid-template-rows: 1fr 1fr 1fr;
   // grid-template-columns: 300px 2.7fr 1fr;
+  grid-gap: 100px;
+  place-self: center;
+  align-items: center;
+`;
+
+
+const StyledTextareaDiv = styled.div`
+  display: flex;
+  cols:"30";
+  rows:"5";
   grid-gap: 100px;
   place-self: center;
   align-items: center;
@@ -109,6 +120,50 @@ export function RunScript(): ReactElement {
     }
   }
 
+  function listTable() {
+    if (scriptSteps.length > 0){
+        return (
+          <>
+            <Table>
+            <Table.Thead>
+            <Table.Tr >
+              <Table.Th >Step</Table.Th>
+              <Table.Th>Cache</Table.Th>
+              <Table.Th textAlign="center" w={80}>
+                State
+              </Table.Th>
+            </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>
+              {scriptSteps.map(step => (
+              // console.log(step)
+              <Table.Tr key={step.name}>
+                <Table.Td>{step.name}</Table.Td>
+                <Table.Td >
+                  <textarea id = {step.name+"_cache"} readOnly cols={50}></textarea>
+                </Table.Td>
+                <Table.Td textAlign="center">
+                  <Button id = {step.name+"_button"} shape="circle" size="sm" variant="primary-info">
+                    <SettingsIcon size="sm" />
+                </Button>
+                </Table.Td>
+              </Table.Tr>
+            ))}
+            </Table.Tbody>
+          </Table>
+          </>
+        );
+    }
+    return <>
+      {/* <div>
+        <Textarea name="textarea2" readOnly value={scriptText} style={{
+          width: 100,
+        }}/>
+        </div> */}
+    </>;
+
+  }
+
   return (
 
     <>
@@ -130,19 +185,21 @@ export function RunScript(): ReactElement {
       </StyledButton>
       </StyledGreetingDiv>
       <SectionDivider/>
+
+
       <StyledTableDiv>
-      <Table>
+      {/* <Table>
         <Table.Thead>
-        <Table.Tr>
-          <Table.Th>Step</Table.Th>
+        <Table.Tr >
+          <Table.Th >Step</Table.Th>
           <Table.Th>Cache</Table.Th>
           <Table.Th textAlign="center" w={80}>
             State
           </Table.Th>
         </Table.Tr>
         </Table.Thead>
-        <Table.Tbody>
-        {scriptSteps.map(step => (
+        <Table.Tbody> */}
+        {/* {scriptSteps.map(step => (
           // console.log(step)
           <Table.Tr key={step.name}>
             <Table.Td>{step.name}</Table.Td>
@@ -155,19 +212,20 @@ export function RunScript(): ReactElement {
             </Button>
             </Table.Td>
           </Table.Tr>
-        ))}
-        </Table.Tbody>
-      </Table>
+        ))} */}
+        {listTable()}
+        {/* </Table.Tbody>
+      </Table> */}
       </StyledTableDiv>
 
-      <div>
-        <div>
+      <StyledTextareaDiv>
+        {/* <div>
         <Textarea name="textarea2" readOnly value={scriptText} />
-        </div>
-        <div>
-        <Textarea id="textarea_log" readOnly></Textarea>
-        </div>
-      </div>
+        </div> */}
+        <Field label="Log from the execution of script">
+        <Textarea id="textarea_log" readOnly cols={150}></Textarea>
+        </Field>
+      </StyledTextareaDiv>
 
 
     </>

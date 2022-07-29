@@ -2932,6 +2932,24 @@
     "@welcome-ui/utils" "^4.2.0"
     ramda "^0.28.0"
 
+"@welcome-ui/field-group@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@welcome-ui/field-group/-/field-group-4.2.0.tgz#5962a269769f7b55aad5b0277e7607181bddf8ae"
+  integrity sha512-2ydEZUb4/6di2jf4iMHFmASHy884V5Jb4ZRCg7OwkIsKWZixQ+c4r39GIlphpe2PAfyLhGJMF0y2YHTE6sotkg==
+  dependencies:
+    "@welcome-ui/label" "^4.2.0"
+    "@welcome-ui/system" "^4.2.0"
+
+"@welcome-ui/field@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@welcome-ui/field/-/field-4.2.0.tgz#e217453c488adbeca2bbaa75451f4c35e59600f7"
+  integrity sha512-obeHKSEaVgYXa1yW4YTeDtr3CqNQ3h+lm1llJd0H0JoLORaGA3oUmP6A0WFZ00Rrfu4seytvJRelOt9UdVezyA==
+  dependencies:
+    "@welcome-ui/field-group" "^4.2.0"
+    "@welcome-ui/hint" "^4.2.0"
+    "@welcome-ui/label" "^4.2.0"
+    "@welcome-ui/system" "^4.2.0"
+
 "@welcome-ui/grid@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@welcome-ui/grid/-/grid-4.2.0.tgz#4c69fe848eedfa4d653a180af7b58e41a0197cc7"
@@ -2939,6 +2957,15 @@
   dependencies:
     "@welcome-ui/box" "^4.2.0"
     "@welcome-ui/system" "^4.2.0"
+
+"@welcome-ui/hint@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@welcome-ui/hint/-/hint-4.2.0.tgz#673bddd3108542bfa302bd215544eabd48d69af6"
+  integrity sha512-cNX470GSV3mN+iB/F5Att8Ueh03i44AQFkzhnjW/1GYzcikUBDqyqq3rQEcTtHaolErMFuOdlgqHFJTH2lbe3A==
+  dependencies:
+    "@welcome-ui/system" "^4.2.0"
+    "@welcome-ui/utils" "^4.2.0"
+    "@welcome-ui/variant-icon" "^4.2.0"
 
 "@welcome-ui/icon@^4.2.0":
   version "4.2.0"
@@ -5217,6 +5244,16 @@
     "@welcome-ui/icons.youtube" "^4.2.0"
     "@welcome-ui/icons.zip" "^4.2.0"
 
+"@welcome-ui/label@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@welcome-ui/label/-/label-4.2.0.tgz#c7efbb6081cad24649ca5954ad8acf29cbaaddf0"
+  integrity sha512-LRUC69c66VEQM/Ufygq7vYwQmLMWahni0r/17V6BT5lNLXkMDwrW8ekG3ZC8h/RGhTulkZcgXEtBleZQzXttrQ==
+  dependencies:
+    "@welcome-ui/icons.lock" "^4.2.0"
+    "@welcome-ui/system" "^4.2.0"
+    "@welcome-ui/utils" "^4.2.0"
+    "@welcome-ui/variant-icon" "^4.2.0"
+
 "@welcome-ui/system@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@welcome-ui/system/-/system-4.2.0.tgz#2077b3b4b598e54b248b909e407de9fde83b87f7"
@@ -5247,6 +5284,18 @@
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@welcome-ui/utils/-/utils-4.2.0.tgz#32b847af0561f0d29da05fecdb06577be442e0eb"
   integrity sha512-SpShEOP4tM3XEEEzHM4Bc8QlMmfzrO+9y6LtJpIP+cBhfPhgc+o9fI9ecATe6ECnRJz+yJa8zLIkpJ0ZFb9wrQ==
+
+"@welcome-ui/variant-icon@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@welcome-ui/variant-icon/-/variant-icon-4.2.0.tgz#1aaea947f841159cf6ac2c3db418e2075cc0db84"
+  integrity sha512-qYIpPkZTH3UQ1HQpopFqHpud2id0KShtf4XXDDOvyqQtyrsdAOgu68k8s8foYYrcGhXB5WeNbPlsFS7PyPAw/w==
+  dependencies:
+    "@welcome-ui/box" "^4.2.0"
+    "@welcome-ui/icons.alert" "^4.2.0"
+    "@welcome-ui/icons.check" "^4.2.0"
+    "@welcome-ui/icons.information" "^4.2.0"
+    "@welcome-ui/system" "^4.2.0"
+    "@welcome-ui/utils" "^4.2.0"
 
 "@xstyled/core@^3.6.0":
   version "3.6.0"

@@ -18,7 +18,7 @@ async function stepApproveUSDCToQuickswapRouter(signer: Signer, cache: any) {
 
   const amount = ethers.utils.parseUnits('1', 6);
   // await (await usdc.connect(signer).approve(router.address, amount)).wait();
-  textareaLog('allowance', (await usdc.allowance(await signer.getAddress(), router.address)).toString());
+  textareaLog('allowance: ' + (await usdc.allowance(await signer.getAddress(), router.address)).toString());
   return { amount: amount };
 }
 
@@ -42,8 +42,8 @@ async function stepSwapUSDCToDAIByQuickswap(signer: Signer, cache: any) {
   // Verify result
   const signerDAIBalanceAfter = await dai.balanceOf(signerAddress);
   const signerUSDCBalanceAfter = await usdc.balanceOf(signerAddress);
-  textareaLog('Dai balance:', signerDAIBalanceAfter.toString());
-  textareaLog('USDC balance:', signerUSDCBalanceAfter.toString());
+  textareaLog('Dai balance: ' + signerDAIBalanceAfter.toString());
+  textareaLog('USDC balance: ' + signerUSDCBalanceAfter.toString());
   expect(signerUSDCBalanceBefore.sub(signerUSDCBalanceAfter).eq(amount)).to.be.eq(true);
   // expect(signerDAIBalanceAfter.gt(signerDAIBalanceBefore)).to.be.eq(true);
 

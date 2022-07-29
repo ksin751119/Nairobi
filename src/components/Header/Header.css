@@ -43,22 +43,15 @@ header .icon {
 header .nav-menu {
 	height: 100%;
 	display: flex;
-	align-items: center;
+	/* align-items: right; */
 	justify-content: center;
 	float: none;
-	margin-right: 60px;
+	position: relative;
+	/* margin-left: 100px; */
 	transition: 0.2s ease-out;
-	margin-right: 0px;
-}
-header .nav-menu li a {
-	margin-right: 10px;
 }
 
-header .nav-menu li a:hover, header .icon:hover {
-	/* border-bottom: 3px solid #3e3e3e; */
-	margin-right: 10px;
-	/* transition: 0.1s ease-out; */
-}
+
 
 @media screen and (max-width: 1380px) {
 	header {
