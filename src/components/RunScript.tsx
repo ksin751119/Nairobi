@@ -18,6 +18,7 @@ import { Textarea } from '@welcome-ui/textarea'
 import { Table } from '@welcome-ui/table'
 import { Button } from '@welcome-ui/button'
 import { SettingsIcon } from '@welcome-ui/icons'
+import { SectionDivider } from './SectionDivider';
 
 
 
@@ -128,6 +129,7 @@ export function RunScript(): ReactElement {
           Run Script
       </StyledButton>
       </StyledGreetingDiv>
+      <SectionDivider/>
       <StyledTableDiv>
       <Table>
         <Table.Thead>

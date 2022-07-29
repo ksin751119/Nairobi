@@ -8,9 +8,9 @@ type CleanupFunction = (() => void) | undefined;
 
 const StyledWalletStatusDiv = styled.div`
   display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 0.6fr 0.1fr 0.6fr 1fr 0.1fr 0.6fr 0.5fr 0.1fr 1.1fr 0.4fr 0.1fr 1fr 0.9fr 0.1fr 0.7fr 0.1fr;
-  grid-gap: 10px;
+  // grid-template-rows: 1fr;
+  grid-template-columns: 0.6fr 0.1fr 0.6fr 0.5fr 0.1fr 1fr 0.5fr 0.1fr 1.3fr 0.4fr 0.1fr 1fr 0.7fr 0.1fr 0.7fr 0.1fr;
+  grid-gap: 5px;
   place-self: center;
   align-items: center;
 `;
@@ -264,7 +264,7 @@ export function WalletStatus(): ReactElement {
       <Account />
       <Balance />
       <NextNonce />
-      <StatusIcon />
+      {/* <StatusIcon /> */}
     </StyledWalletStatusDiv>
   );
 }

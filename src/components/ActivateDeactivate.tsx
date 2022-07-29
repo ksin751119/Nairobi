@@ -125,6 +125,8 @@ function Deactivate(): ReactElement {
   );
 }
 
+
+
 export function ActivateDeactivate(): ReactElement {
   const context = useWeb3React<Provider>();
   const { error } = context;

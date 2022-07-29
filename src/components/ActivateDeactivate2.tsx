@@ -4,12 +4,13 @@ import {
   NoEthereumProviderError,
   UserRejectedRequestError
 } from '@web3-react/injected-connector';
-import { MouseEvent, ReactElement, useState } from 'react';
+import { MouseEvent, ReactElement, useState, useEffect, } from 'react';
 import styled from 'styled-components';
 import { injected } from '../utils/connectors';
 import { useEagerConnect, useInactiveListener } from '../utils/hooks';
 import { Provider } from '../utils/provider';
-import { Button } from '@welcome-ui/button'
+import { Button  } from '@welcome-ui/button'
+import { AvatarIcon } from '@welcome-ui/icons.avatar'
 
 type ActivateFunction = (
   connector: AbstractConnector,
@@ -46,27 +47,33 @@ const StyledActivateDeactivateDiv = styled.div`
   align-items: center;
 `;
 
-const StyledActivateButton = styled.button`
-  width: 150px;
-  height: 2rem;
-  border-radius: 1rem;
-  border-color: green;
-  cursor: pointer;
-`;
 
-const StyledDeactivateButton = styled.button`
-  width: 150px;
-  height: 2rem;
-  border-radius: 1rem;
-  border-color: red;
-  cursor: pointer;
-`;
 
-function Activate(): ReactElement {
+function Connect(): ReactElement {
   const context = useWeb3React<Provider>();
-  const { activate, active } = context;
-
+  const { activate, deactivate, active } = context;
   const [activating, setActivating] = useState<boolean>(false);
+  const [buttonText, setButtonText] = useState<string>('');
+
+
+
+  useEffect((): void => {
+    if (active) {
+      setButtonText("Disconnect")
+      return;
+    }
+    setButtonText("Connect");
+
+  }, [active]);
+
+
+  function handleDeactivate(event: MouseEvent<HTMLButtonElement>): void {
+    event.preventDefault();
+
+    deactivate();
+    setButtonText("Connect")
+
+  }
 
   function handleActivate(event: MouseEvent<HTMLButtonElement>): void {
     event.preventDefault();
@@ -75,56 +82,30 @@ function Activate(): ReactElement {
       setActivating(true);
       await activate(injected);
       setActivating(false);
+
+      setButtonText("Disconnect")
     }
 
     _activate(activate);
   }
 
-  // handle logic to eagerly connect to the injected ethereum provider, if it exists and has
-  // granted access already
-  const eagerConnectionSuccessful = useEagerConnect();
-
-  // handle logic to connect in reaction to certain events on the injected ethereum provider,
-  // if it exists
-  useInactiveListener(!eagerConnectionSuccessful);
-
-  return (
-    <Button
-      variant="primary-success"
-      disabled={active}
-      style={{
-        cursor: active ? 'not-allowed' : 'pointer',
-        borderColor: activating ? 'orange' : active ? 'unset' : 'green'
-      }}
-      onClick={handleActivate}
-    >
-
-      Connect
-    </Button>
-  );
-}
-
-function Deactivate(): ReactElement {
-  const context = useWeb3React<Provider>();
-  const { deactivate, active } = context;
-
-  function handleDeactivate(event: MouseEvent<HTMLButtonElement>): void {
+  function clickButtom(event: MouseEvent<HTMLButtonElement>): void {
     event.preventDefault();
+    if (active){
+      handleDeactivate(event)
+    } else {
+      handleActivate(event)
+    }
 
-    deactivate();
   }
 
   return (
     <Button
-      disabled={!active}
-      variant="primary-danger"
-      style={{
-        cursor: active ? 'pointer' : 'not-allowed',
-        borderColor: active ? 'red' : 'unset'
-      }}
-      onClick={handleDeactivate}
+      variant={active? "primary-danger": "primary-success"}
+      onClick={clickButtom}
     >
-      Disconnect
+      <AvatarIcon size="lg" style={{marginRight:10}}/>
+      {buttonText}
     </Button>
   );
 }
@@ -139,9 +120,7 @@ export function ActivateDeactivate2(): ReactElement {
 
   return (
     <StyledActivateDeactivateDiv>
-      <Activate />
-      <Deactivate />
-
+      <Connect/>
     </StyledActivateDeactivateDiv>
   );
 }
