@@ -12,7 +12,7 @@ Nairobi is a deployment tool that sets up and deploys contracts without exposing
 - Write the script by using Ether.js
 - Basically support EVM-Based Chains
 
-## Example ([Demo](https://github.com/ksin751119/Nairobi) on Polygon)
+## Example ([Demo](https://youtu.be/qDpyWvYqlJY) on Polygon)
 
 - setp example: show the step flow system how to work
 
