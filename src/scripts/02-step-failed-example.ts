@@ -12,10 +12,7 @@ async function stepFailed1(signer: Signer, cache: any) {
 }
 
 async function stepFailed2(signer: Signer, cache: any) {
-  textareaLog('stepFailed2');
-
   const amount = cache.returns.amount;
-
   textareaLog('amount from previous stepFailed1: ' + amount.toString());
 
   // error happened

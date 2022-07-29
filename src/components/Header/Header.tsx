@@ -4,8 +4,7 @@ import './Header.css';
 
 import {ReactElement} from "react";
 import { WalletStatus } from '../../components/WalletStatus';
-import { ActivateDeactivate } from '../../components/ActivateDeactivate';
-import { ActivateDeactivate2 } from '../../components/ActivateDeactivate2';
+import { ActivateDeactivate } from '../ActivateDeactivate';
 // import { Table } from '@welcome-ui/table'
 
 
@@ -18,17 +17,15 @@ export function Header():ReactElement {
 			{/* <div className="inner clearfix"> */}
 
 				<div className="header-logo">
-					{/* <span>&lt;</span> */}
-					Nairobi
-					{/* <a href="#">{greeting.username}</a> */}
+
+					<a href="https://github.com/ksin751119/Nairobi" style={{color:'black' }} target="_blank" rel="noreferrer" >Nairobi</a>
 					{/* <span>/&gt;</span> */}
 
 				</div>
 				<div>
 				<ul className="nav-menu">
 				<WalletStatus/>
-
-				<ActivateDeactivate2 />
+				<ActivateDeactivate />
 				</ul>
 
 				</div>

@@ -108,11 +108,12 @@ export async function stepRun(key: any, store: any, signer: Signer, steps: any) 
       }
     }
     try {
+      textareaLog('#####  ' + steps[i].name + '  #####');
       var returnObj: any = await steps[i](signer, cache);
     } catch (e) {
       var button = document.getElementById(steps[i].name + '_button') as HTMLButtonElement;
       button.style.background = '#CE5947';
-      window.alert(e);
+      window.alert(JSON.stringify(e));
       throw e;
     }
     if (returnObj !== undefined) {
@@ -157,6 +158,15 @@ export async function textareaLog(...args: any[]) {
 export async function textareaClear(...args: any[]) {
   var textarea = document.getElementById('textarea_log') as HTMLInputElement;
   textarea.value = '';
+}
+
+export async function sendTx(executeTx: any) {
+  await toast.promise(executeTx.wait(), {
+    pending: 'tx is pending',
+    success: 'tx mined 👌',
+    error: 'tx fail 🤯',
+  });
+  return executeTx;
 }
 
 function replacer(key: any, value: any) {
