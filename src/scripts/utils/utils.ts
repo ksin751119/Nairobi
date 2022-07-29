@@ -1,6 +1,6 @@
 import { BigNumber, Signer, ethers } from 'ethers';
 import { isHexString } from '@ethersproject/bytes';
-import { Button } from '@welcome-ui/button';
+import { toast } from 'react-toastify';
 
 export function ether(num: any) {
   return ethers.utils.parseUnits(num, 'ether');
@@ -71,6 +71,7 @@ export function decimal18To6(amount: any) {
 }
 
 export function resetCache(key: any, store: any, steps: any) {
+  // toast('Wow so easy!');
   if (
     window.confirm(
       'Prepare to execute "' + key + '"  script. \nWould you want to reset cache before execute the script'
@@ -131,7 +132,7 @@ export async function stepRun(key: any, store: any, signer: Signer, steps: any) 
     button.style.background = '#52B45A';
   }
 
-  // await downloadFile(key, cache);
+  await downloadFile(key, cache);
 }
 
 export async function downloadFile(key: any, data: any) {
