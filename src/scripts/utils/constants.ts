@@ -5,4 +5,10 @@ export const USDC_TOKEN = '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174';
 export const DAI_TOKEN = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
 
 // External Service
-export const QUICKSWAP_ROUTER= '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff';
+export const QUICKSWAP_ROUTER = '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff';
+
+// Gnosis Setup
+export const Gnosis_SAFE_TX_SERVICE_URL_MAPS = new Map([
+  ['ethereum', ''],
+  ['polygon', 'https://safe-transaction.polygon.gnosis.io/'],
+]);

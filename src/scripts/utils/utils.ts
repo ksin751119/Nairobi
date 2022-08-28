@@ -1,6 +1,13 @@
 import { BigNumber, Signer, ethers } from 'ethers';
 import { isHexString } from '@ethersproject/bytes';
 import { toast } from 'react-toastify';
+import SafeServiceClient from '@gnosis.pm/safe-service-client';
+import EthersAdapter from '@gnosis.pm/safe-ethers-lib';
+import { SafeTransactionDataPartial } from '@gnosis.pm/safe-core-sdk-types';
+import Safe from '@gnosis.pm/safe-core-sdk';
+import { Gnosis_SAFE_TX_SERVICE_URL_MAPS } from './constants';
+
+const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay));
 
 export function ether(num: any) {
   return ethers.utils.parseUnits(num, 'ether');
@@ -124,16 +131,16 @@ export async function stepRun(key: any, store: any, signer: Signer, steps: any) 
       store.setItem(key, JSON.stringify(cache));
 
       var td = document.getElementById(steps[i].name + '_cache') as any;
-      // td.innerHTML = JSON.stringify(returnObj, replacer, 4);
       td.value = JSON.stringify(returnObj, replacer, 4);
       console.log(JSON.stringify(returnObj, replacer, 4));
     }
 
-    var button = document.getElementById(steps[i].name + '_button') as HTMLButtonElement;
+    button = document.getElementById(steps[i].name + '_button') as HTMLButtonElement;
     button.style.background = '#52B45A';
   }
 
   await downloadFile(key, cache);
+  window.alert('script execution done');
 }
 
 export async function downloadFile(key: any, data: any) {
@@ -169,6 +176,59 @@ export async function sendTx(executeTx: any) {
   return executeTx;
 }
 
+export async function sendGnosisSafeRequest(
+  sender: Signer,
+  network: string,
+  safeAddress: string,
+  to: string,
+  value: BigNumber,
+  data: string
+) {
+  // Gnosis environment
+  const ethAdapter = new EthersAdapter({
+    ethers,
+    signer: sender,
+  });
+  const txServiceUrl = Gnosis_SAFE_TX_SERVICE_URL_MAPS.get(network) || '';
+  const safeService = new SafeServiceClient({ txServiceUrl, ethAdapter });
+  const safeSdk = await Safe.create({ ethAdapter, safeAddress });
+
+  // Setup parameter
+  const nonce = await safeService.getNextNonce(safeAddress);
+  const transaction: SafeTransactionDataPartial = {
+    to: to,
+    data: data,
+    value: value.toString(),
+    nonce: nonce,
+  };
+
+  const msg = JSON.stringify(transaction, replacer, 4);
+  if (window.confirm('Please confirm the Gnosis safe request information\nsafe address:' + safeAddress + '\n' + msg)) {
+    // propose transaction request
+    const safeTransaction = await safeSdk.createTransaction(transaction);
+    const safeTxHash = await safeSdk.getTransactionHash(safeTransaction);
+    const senderSignature = await safeSdk.signTransactionHash(safeTxHash);
+    const senderAddress = await sender.getAddress();
+    await safeService.proposeTransaction({
+      safeAddress,
+      safeTransactionData: safeTransaction.data,
+      safeTxHash,
+      senderAddress,
+      senderSignature: senderSignature.data,
+    });
+
+    // check transaction executed
+    await toast.promise(isTransactionExecuted(sender, safeService, safeTxHash), {
+      pending: 'request is pending',
+      success: 'request executed 👌',
+      error: 'request executed fail 🤯',
+    });
+
+    // await isTransactionExecuted(safeService, safeTxHash);
+    return { safeTxHash: safeTxHash };
+  }
+}
+
 function replacer(key: any, value: any) {
   if (isBigNumber(value)) {
     return BigNumber.from(value).toString();
@@ -192,4 +252,22 @@ function isBigNumber(value: any) {
     }
   }
   return false;
+}
+
+async function isTransactionExecuted(sender: Signer, safeService: any, safeTxHash: any) {
+  textareaLog('wait for gnosis execute the transaction');
+  while (true) {
+    const tx = await safeService.getTransaction(safeTxHash);
+    console.log(tx);
+    if (tx.isExecuted) {
+      if (tx.isSuccessful) {
+        await sender.provider?.waitForTransaction(tx.transactionHash, 10);
+        textareaLog(tx, 'execution success');
+      } else {
+        throw new Error('Gnosis tx execute failed: ' + safeTxHash);
+      }
+      break;
+    }
+    await sleep(10000); // 10 sec
+  }
 }

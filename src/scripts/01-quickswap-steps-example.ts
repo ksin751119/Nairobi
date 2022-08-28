@@ -33,11 +33,13 @@ async function stepSwapUSDCToDAIByQuickswap(signer: Signer, cache: any) {
   // swap 1 ether usdc to dai through quickswap
   const amount = cache.returns.amount;
   const path = [usdc.address, WMATIC_TOKEN, DAI_TOKEN];
-  await sendTx(
+  const receipt = await sendTx(
     await router
       .connect(signer)
       .swapExactTokensForTokens(amount, 0, path, await signer.getAddress(), constants.MaxUint256)
   );
+
+  console.log('receipt', receipt);
 
   // Verify result
   const signerDAIBalanceAfter = await dai.balanceOf(signerAddress);
