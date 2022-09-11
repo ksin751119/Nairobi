@@ -7,7 +7,6 @@ import {
 import { MouseEvent, ReactElement, useState, useEffect, } from 'react';
 import styled from 'styled-components';
 import { injected } from '../utils/connectors';
-import { useEagerConnect, useInactiveListener } from '../utils/hooks';
 import { Provider } from '../utils/provider';
 import { Button  } from '@welcome-ui/button'
 import { AvatarIcon } from '@welcome-ui/icons.avatar'
@@ -52,7 +51,7 @@ const StyledActivateDeactivateDiv = styled.div`
 function Connect(): ReactElement {
   const context = useWeb3React<Provider>();
   const { activate, deactivate, active } = context;
-  const [activating, setActivating] = useState<boolean>(false);
+  const [, setActivating] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<string>('');
 
 

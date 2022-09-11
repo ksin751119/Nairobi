@@ -15,9 +15,7 @@ const StyledWalletStatusDiv = styled.div`
   align-items: center;
 `;
 
-const StyledStatusIcon = styled.h1`
-  margin: 0px;
-`;
+;
 
 function ChainId(): ReactElement {
   const { chainId } = useWeb3React<Provider>();
@@ -248,13 +246,6 @@ function NextNonce(): ReactElement {
   );
 }
 
-function StatusIcon(): ReactElement {
-  const { active, error } = useWeb3React<Provider>();
-
-  return (
-    <StyledStatusIcon>{active ? '🟢' : error ? '🔴' : '🟠'}</StyledStatusIcon>
-  );
-}
 
 export function WalletStatus(): ReactElement {
   return (

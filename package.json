@@ -14,7 +14,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.1.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@gnosis.pm/safe-core-sdk": "^2.2.1",
-    "@gnosis.pm/safe-core-sdk-types": "^1.2.1",
+    "@gnosis.pm/safe-core-sdk-types": "^1.4.0",
     "@gnosis.pm/safe-ethers-lib": "^1.2.1",
     "@gnosis.pm/safe-service-client": "^1.2.0",
     "@testing-library/jest-dom": "^5.14.1",
@@ -84,6 +84,7 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.18"
+    "@types/styled-components": "^5.1.18",
+    "hardhat": "^2.10.2"
   }
 }

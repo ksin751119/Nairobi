@@ -1,12 +1,10 @@
 import { useWeb3React } from '@web3-react/core';
-import { Contract, ethers, Signer } from 'ethers';
+import { Signer } from 'ethers';
 import {
-  ChangeEvent,
   MouseEvent,
   ReactElement,
   useEffect,
   useState,
-  useReducer
 } from 'react';
 import Select from 'react-select';
 
@@ -67,10 +65,8 @@ export function RunScript(): ReactElement {
 
   const [signer, setSigner] = useState<Signer>();
   const [scriptInput, setScriptInput] = useState<string>('');
-  const [scriptText, setScriptText] = useState<string>('');
+  const [, setScriptText] = useState<string>('');
   const [scriptSteps, setScriptSteps] = useState<any[]>([]);
-
-  // const forceUpdate = useReducer(() => ({}), {})[1] as () => void
 
 
   useEffect((): void => {
@@ -137,7 +133,6 @@ export function RunScript(): ReactElement {
             </Table.Thead>
             <Table.Tbody>
               {scriptSteps.map(step => (
-              // console.log(step)
               <Table.Tr key={step.name}>
                 <Table.Td>{step.name}</Table.Td>
                 <Table.Td >
@@ -155,13 +150,7 @@ export function RunScript(): ReactElement {
           </>
         );
     }
-    return <>
-      {/* <div>
-        <Textarea name="textarea2" readOnly value={scriptText} style={{
-          width: 100,
-        }}/>
-        </div> */}
-    </>;
+    return <></>;
 
   }
 
@@ -189,45 +178,14 @@ export function RunScript(): ReactElement {
 
 
       <StyledTableDiv>
-      {/* <Table>
-        <Table.Thead>
-        <Table.Tr >
-          <Table.Th >Step</Table.Th>
-          <Table.Th>Cache</Table.Th>
-          <Table.Th textAlign="center" w={80}>
-            State
-          </Table.Th>
-        </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody> */}
-        {/* {scriptSteps.map(step => (
-          // console.log(step)
-          <Table.Tr key={step.name}>
-            <Table.Td>{step.name}</Table.Td>
-            <Table.Td >
-              <textarea id = {step.name+"_cache"} readOnly cols={50}></textarea>
-            </Table.Td>
-            <Table.Td textAlign="center">
-              <Button id = {step.name+"_button"} shape="circle" size="sm" variant="primary-info">
-                <SettingsIcon size="sm" />
-            </Button>
-            </Table.Td>
-          </Table.Tr>
-        ))} */}
         {listTable()}
-        {/* </Table.Tbody>
-      </Table> */}
       </StyledTableDiv>
 
       <StyledTextareaDiv>
-        {/* <div>
-        <Textarea name="textarea2" readOnly value={scriptText} />
-        </div> */}
         <Field label="Log from the execution of script">
         <Textarea id="textarea_log" readOnly cols={150}></Textarea>
         </Field>
       </StyledTextareaDiv>
-
 
     </>
   );

@@ -8,7 +8,6 @@ export const DAI_TOKEN = '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063';
 export const QUICKSWAP_ROUTER = '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff';
 
 // Gnosis Setup
-export const Gnosis_SAFE_TX_SERVICE_URL_MAPS = new Map([
-  ['ethereum', ''],
-  ['polygon', 'https://safe-transaction.polygon.gnosis.io/'],
-]);
+// Gnosis Setup
+export const GNOSIS_SAFE_TX_SERVICE_POLYGON = 'https://safe-transaction.polygon.gnosis.io/';
+export const GNOSIS_SAFE_TX_SERVICE_ETHEREUM = 'https://safe-transaction.gnosis.io/';

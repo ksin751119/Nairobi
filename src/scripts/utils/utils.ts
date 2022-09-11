@@ -5,7 +5,6 @@ import SafeServiceClient from '@gnosis.pm/safe-service-client';
 import EthersAdapter from '@gnosis.pm/safe-ethers-lib';
 import { SafeTransactionDataPartial } from '@gnosis.pm/safe-core-sdk-types';
 import Safe from '@gnosis.pm/safe-core-sdk';
-import { Gnosis_SAFE_TX_SERVICE_URL_MAPS } from './constants';
 
 const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay));
 
@@ -116,7 +115,9 @@ export async function stepRun(key: any, store: any, signer: Signer, steps: any) 
     }
     try {
       textareaLog('#####  ' + steps[i].name + '  #####');
+      // Execute script
       var returnObj: any = await steps[i](signer, cache);
+      await steps[i](signer, cache);
     } catch (e) {
       var button = document.getElementById(steps[i].name + '_button') as HTMLButtonElement;
       button.style.background = '#CE5947';
@@ -178,20 +179,20 @@ export async function sendTx(executeTx: any) {
 
 export async function sendGnosisSafeRequest(
   sender: Signer,
-  network: string,
+  txServiceUrl: string,
   safeAddress: string,
   to: string,
   value: BigNumber,
-  data: string
+  data: string,
+  isL1SafeMasterCopy: boolean
 ) {
   // Gnosis environment
   const ethAdapter = new EthersAdapter({
     ethers,
     signer: sender,
   });
-  const txServiceUrl = Gnosis_SAFE_TX_SERVICE_URL_MAPS.get(network) || '';
   const safeService = new SafeServiceClient({ txServiceUrl, ethAdapter });
-  const safeSdk = await Safe.create({ ethAdapter, safeAddress });
+  const safeSdk = await Safe.create({ ethAdapter, safeAddress, isL1SafeMasterCopy: isL1SafeMasterCopy });
 
   // Setup parameter
   const nonce = await safeService.getNextNonce(safeAddress);
@@ -223,8 +224,6 @@ export async function sendGnosisSafeRequest(
       success: 'request executed 👌',
       error: 'request executed fail 🤯',
     });
-
-    // await isTransactionExecuted(safeService, safeTxHash);
     return { safeTxHash: safeTxHash };
   }
 }
@@ -258,9 +257,10 @@ async function isTransactionExecuted(sender: Signer, safeService: any, safeTxHas
   textareaLog('wait for gnosis execute the transaction');
   while (true) {
     const tx = await safeService.getTransaction(safeTxHash);
-    console.log(tx);
     if (tx.isExecuted) {
       if (tx.isSuccessful) {
+        console.log(tx);
+        console.log('tx success, wait for confirmations');
         await sender.provider?.waitForTransaction(tx.transactionHash, 10);
         textareaLog(tx, 'execution success');
       } else {

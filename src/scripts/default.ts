@@ -1,7 +1,6 @@
 // Add Scripts Here
-export const SCRIPTS_MAPS = new Map([
-  ['step example', import('./01-quickswap-steps-example')],
-  ['failed example', import('./02-step-failed-example')],
-  ['gnosis example', import('./03-gnosis-example')],
-  ['monthly-invest', import('./04-monthly-invest')],
+export const SCRIPTS_MAPS = new Map<string, any>([
+  ['step-example', import('./quickswap-steps-example')],
+  ['gnosis-exmpale-polygon', import('./gnosis-safe-example-polygon')],
+  ['gnosis-exmpale-etherum', import('./gnosis-safe-example-ethereum')],
 ]);
