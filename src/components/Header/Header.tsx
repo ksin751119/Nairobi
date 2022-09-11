@@ -14,14 +14,8 @@ export function Header():ReactElement {
 
 	return (
 		<header className="header header--section">
-			{/* <div className="inner clearfix"> */}
-
 				<div className="header-logo">
-
-
-					<a href="https://github.com/ksin751119/Nairobi" style={{color:'black' }} target="_blank" rel="noreferrer" >Nairobi</a>
-
-
+					<a href="https://github.com/ksin751119/Nairobi" style={{color:'black'}} target="_blank" rel="noreferrer" ><img src={require('../../assets/images/logoN.png')} alt="Background" height="40"/></a>
 				</div>
 				<div>
 				<ul className="nav-menu">

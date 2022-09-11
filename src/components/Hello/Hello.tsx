@@ -1,8 +1,5 @@
-import React from 'react';
 import './Hello.css';
 import {ReactElement} from "react";
-// import { greeting } from '../../portfolio';
-// import Social from '../Social/Social';
 
 export function Hello():ReactElement {
 	const Fade: any = require("react-reveal/Fade");
