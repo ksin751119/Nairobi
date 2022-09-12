@@ -6,11 +6,13 @@ import { stepRun, textareaLog, sendTx } from './utils/utils';
 import IERC20ABI from '../abi/IERC20.abi.json';
 import QuickswapRouterABI from '../abi/QuickswapRouter.abi.json';
 
+// Global variable
 const store = new LocalStorage();
 var usdc: any;
 var dai: any;
 var router: any;
 
+// Step function
 async function ApproveUSDCToQuickSwapRouter(signer: Signer, cache: any) {
   const amount = ethers.utils.parseUnits('0.1', 6);
   await sendTx(await usdc.connect(signer).approve(router.address, amount));
@@ -42,10 +44,11 @@ async function SwapUSDCToDAIByQuickSwap(signer: Signer, cache: any) {
 
   return {
     signerDAIBalanceAfter: signerDAIBalanceAfter,
-    signerUSDCBalanceAfter: signerUSDCBalanceAfter.toString(),
+    signerUSDCBalanceAfter: signerUSDCBalanceAfter,
   };
 }
 
+// Setup script steps
 export const ScriptSteps = [ApproveUSDCToQuickSwapRouter, SwapUSDCToDAIByQuickSwap];
 export default async function scriptRun(key: string, signer: Signer) {
   // Setup global variable

@@ -71,7 +71,6 @@ export async function stepRun(key: any, store: any, signer: Signer, steps: any) 
       textareaLog('#####  ' + steps[i].name + '  #####');
       // Execute script
       var returnObj: any = await steps[i](signer, cache);
-      await steps[i](signer, cache);
     } catch (e) {
       var button = document.getElementById(steps[i].name + '_button') as HTMLButtonElement;
       button.style.background = '#CE5947';
